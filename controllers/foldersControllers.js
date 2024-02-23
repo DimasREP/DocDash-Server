@@ -5,7 +5,7 @@ const store = async (req, res) => {
     try {
         const save = await Folders.create(req.body)
         res.json(save).status(200)
-    } catch (error) {
+    } catch (error) {       
         res.json(error).status(422)
     }
 }

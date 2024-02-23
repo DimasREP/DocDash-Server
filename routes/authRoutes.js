@@ -3,6 +3,7 @@ const express = require("express");
 const auth = require("../controllers/authController");
 const { check, validationResult } = require("express-validator");
 const passwordHash = require("password-hash");
+const { verifyToken } = require("../middleware/verify");
 const router = express.Router();
 
 const checkValidation = [
@@ -65,5 +66,7 @@ router.post(`/api/v1/auth/login`, [checkValidationLogin], (req, res) => {
     : auth.authentication(req, res);
 });
 router.post(`/api/v1/auth/logout`, auth.logout);
+
+router.get(`/api/v1/auth/me`,verifyToken,auth.getLoginById)
 
 module.exports = router;

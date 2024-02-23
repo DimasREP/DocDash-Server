@@ -1,7 +1,10 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
-const db = require("../database/models")
+const db = require("../database/models");
+const users = require('../database/models/users');
+const { use } = require('../routes/employeRoutes');
 const Blacklist = db.Blacklist;
+const Users = db.Users;
 /**
  *
  *
@@ -30,9 +33,27 @@ const verifyToken = async (req, res, next) => {
         /* 
             proses verifikasi token dengan secret key yang kita buat
         */
-        jwt.verify(token, process.env.JWT_KEY, (err) => {
+        jwt.verify(token, process.env.JWT_KEY, async (err, decoded) => {
             if (err) {
                 return res.status(500).send({ auth: false, message: err })
+            }
+
+            req.userToken = decoded.userToken;
+
+            if (req.url.includes('me')) {
+                const user = await Users.findByPk(decoded.userToken.id);
+
+                if (!user) {
+                    return  res.status(404).json({ msg: 'User not found'});
+                }
+
+                req.user = {
+                    id: user.id,
+                    username: user.username,
+                    
+                };
+
+                req.url = req.url.replace('me', decoded.userToken.id.toString());
             }
             next()
         })
