@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Folders extends Model {
+  class Documents extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,16 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Folders.belongsTo(models.Users, {foreignKey: 'user_id'});
-      Folders.hasMany(models.Documents, {foreignKey: 'folder_id'});
+      Documents.belongsTo(models.Folders, {foreignKey: 'folder_id'});
     }
   }
-  Folders.init({
-    user_id: DataTypes.INTEGER,
-    FolderName: DataTypes.STRING
+  Documents.init({
+    folder_id: DataTypes.INTEGER,
+    file: DataTypes.STRING,
+    namefile: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Folders',
+    modelName: 'Documents',
   });
-  return Folders;
+  return Documents;
 };

@@ -20,6 +20,7 @@ const checkValidation = [
     .isEmpty()
     .withMessage("required value")
     .isAlphanumeric(),
+  check("role").not().isEmpty().withMessage("required value").isAlphanumeric(),
 ];
 
 const checkValidationLogin = [
@@ -43,6 +44,7 @@ const postParam = (req) => {
       username: req.body.username.trim(),
       email: req.body.email,
       password: passwordToSave,
+      role: req.body.role,
     };
   return data;
 };
@@ -67,6 +69,6 @@ router.post(`/api/v1/auth/login`, [checkValidationLogin], (req, res) => {
 });
 router.post(`/api/v1/auth/logout`, auth.logout);
 
-router.get(`/api/v1/auth/me`,verifyToken,auth.getLoginById)
+router.get(`/api/v1/auth/me`, verifyToken, auth.getLoginById);
 
 module.exports = router;

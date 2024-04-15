@@ -40,6 +40,7 @@ const authentication = async (req, res) => {
       const userToken = {
         id: fetchResult.id,
         username: fetchResult.username,
+        role: fetchResult.role
       };
 
       /*  set token dengan value usertoken
@@ -54,7 +55,7 @@ const authentication = async (req, res) => {
           expiresIn: "8d", //set exipre token
         },
         (err, token) => {
-          res.json({ token: token }).status(200);
+          res.json({ token: token, role: fetchResult.role }).status(200);
         }
       );
     }
