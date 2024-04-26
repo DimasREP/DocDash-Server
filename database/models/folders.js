@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Folders.belongsTo(models.Users, {foreignKey: 'user_id'});
-      Folders.hasMany(models.Documents, {foreignKey: 'folder_id'});
+      Folders.belongsTo(models.Users, { foreignKey: 'user_id' });
+      Folders.hasMany(models.Documents, { foreignKey: 'folder_id' });
     }
   }
   Folders.init({

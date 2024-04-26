@@ -38,7 +38,7 @@ const checkValidationLogin = [
 ];
 
 const postParam = (req) => {
-  // hash password dengan  library password hash
+  // hash password dengan library password hash
   const passwordToSave = passwordHash.generate(req.body.password),
     data = {
       username: req.body.username.trim(),

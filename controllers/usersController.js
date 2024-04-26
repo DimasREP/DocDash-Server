@@ -1,5 +1,4 @@
 const db = require("../database/models")
-
 const Users = db.Users;
 
 const index = async (req, res) => {
